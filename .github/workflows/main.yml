@@ -1,0 +1,19 @@
+name: My First Deploy Test
+
+on:
+  push:
+    branches: [ "main", "master" ]
+
+jobs:
+  test-job:
+    # 여기가 핵심! 깃허브 서버가 아니라 우리 VM 100번에서 실행하라는 마법의 단어입니다.
+    runs-on: self-hosted 
+
+    steps:
+      - name: 🚀 100번 서버에 명령 내리기
+        run: |
+          echo "====================================="
+          echo "🎉 깃허브 액션 통신 테스트 성공! 🎉"
+          echo "명령을 수신한 서버: $(hostname)"
+          echo "현재 실행 중인 계정: $(whoami)"
+          echo "====================================="
