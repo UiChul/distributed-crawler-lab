@@ -1,4 +1,4 @@
-name: My First Deploy Test
+name: Python Library Test
 
 on:
   push:
@@ -6,14 +6,14 @@ on:
 
 jobs:
   test-job:
-    # 여기가 핵심! 깃허브 서버가 아니라 우리 VM 100번에서 실행하라는 마법의 단어입니다.
     runs-on: self-hosted 
 
     steps:
-      - name: 🚀 100번 서버에 명령 내리기
-        run: |
-          echo "====================================="
-          echo "🎉 깃허브 액션 통신 테스트 성공! 🎉"
-          echo "명령을 수신한 서버: $(hostname)"
-          echo "현재 실행 중인 계정: $(whoami)"
-          echo "====================================="
+      - name: 📥 1. 깃허브에서 내 코드(hello.py) 다운로드
+        uses: actions/checkout@v3
+
+      - name: 📦 2. 파이썬 외부 라이브러리 설치
+        run: pip3 install pyfiglet --user
+
+      - name: 🚀 3. 파이썬 스크립트 실행
+        run: python3 hello.py
