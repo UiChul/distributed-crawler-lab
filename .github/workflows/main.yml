@@ -1,19 +1,27 @@
-name: Python Library Test
+name: 3-Node Distributed Test
 
 on:
   push:
     branches: [ "main", "master" ]
 
 jobs:
-  test-job:
+  distribute-job:
     runs-on: self-hosted 
 
     steps:
-      - name: 📥 1. 깃허브에서 내 코드(hello.py) 다운로드
+      - name: 📥 1. 100번(지휘관) 서버로 코드 다운로드
         uses: actions/checkout@v3
 
-      - name: 📦 2. 파이썬 외부 라이브러리 설치
-        run: pip3 install pyfiglet --user
+      - name: 🚀 2. [Local] 100번 서버 명령 실행
+        run: |
+          echo "====================================="
+          echo "🟢 [Node 100] 본부 실행 완료! $(hostname)"
 
-      - name: 🚀 3. 파이썬 스크립트 실행
-        run: python3 hello.py
+      - name: 🚀 3. [Remote] 101번 서버로 명령 하달
+        run: |
+          ssh -o StrictHostKeyChecking=no root@192.168.100.101 "echo '🔵 [Node 101] 1번 워커 수신 완료! \$(hostname)'"
+
+      - name: 🚀 4. [Remote] 102번 서버로 명령 하달
+        run: |
+          ssh -o StrictHostKeyChecking=no root@192.168.100.102 "echo '🟣 [Node 102] 2번 워커 수신 완료! \$(hostname)'"
+          echo "====================================="
